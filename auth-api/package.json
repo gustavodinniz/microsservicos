@@ -8,6 +8,7 @@
     "startDev": "nodemon app.js"
   },
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cores": "^0.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
