@@ -17,10 +17,10 @@ const sequelize = new Sequelize("auth-db", "admin", "123456", {
 sequelize
     .authenticate()
     .then(() => {
-        console.info("Connection has been stablished");
+        console.info("---> Connection has been stablished");
     })
     .catch(err => {
-        console.error("Unable to connect to the database.");
+        console.error("---> Unable to connect to the database.");
         console.error(err.message);
     });
 
