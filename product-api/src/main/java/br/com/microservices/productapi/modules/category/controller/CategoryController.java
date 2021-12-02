@@ -1,8 +1,8 @@
-package br.com.microservices.productapi.modules.product.controller;
+package br.com.microservices.productapi.modules.category.controller;
 
-import br.com.microservices.productapi.modules.product.dto.CategoryRequest;
-import br.com.microservices.productapi.modules.product.dto.CategoryResponse;
-import br.com.microservices.productapi.modules.product.service.CategoryService;
+import br.com.microservices.productapi.modules.category.dto.CategoryRequest;
+import br.com.microservices.productapi.modules.category.dto.CategoryResponse;
+import br.com.microservices.productapi.modules.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

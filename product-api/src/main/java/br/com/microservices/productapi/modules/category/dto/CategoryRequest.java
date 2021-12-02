@@ -1,4 +1,4 @@
-package br.com.microservices.productapi.modules.product.dto;
+package br.com.microservices.productapi.modules.category.dto;
 
 import lombok.Data;
 

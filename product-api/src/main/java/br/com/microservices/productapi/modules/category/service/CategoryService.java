@@ -1,10 +1,11 @@
-package br.com.microservices.productapi.modules.product.service;
+package br.com.microservices.productapi.modules.category.service;
 
 import br.com.microservices.productapi.config.exception.ValidationException;
-import br.com.microservices.productapi.modules.product.dto.CategoryRequest;
-import br.com.microservices.productapi.modules.product.dto.CategoryResponse;
-import br.com.microservices.productapi.modules.product.model.Category;
-import br.com.microservices.productapi.modules.product.repository.CategoryRepository;
+import br.com.microservices.productapi.modules.category.dto.CategoryRequest;
+import br.com.microservices.productapi.modules.category.dto.CategoryResponse;
+import br.com.microservices.productapi.modules.category.model.Category;
+import br.com.microservices.productapi.modules.category.repository.CategoryRepository;
+import br.com.microservices.productapi.modules.supplier.model.Supplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,12 @@ public class CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    public Category findById(Integer id){
+        return categoryRepository
+                .findById(id)
+                .orElseThrow(() -> new ValidationException("There's no category for the given ID."));
+    }
 
     public CategoryResponse save(CategoryRequest request) {
         validateCategoryNameInformed(request);

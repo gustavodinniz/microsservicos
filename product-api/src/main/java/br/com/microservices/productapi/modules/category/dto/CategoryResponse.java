@@ -1,6 +1,6 @@
-package br.com.microservices.productapi.modules.product.dto;
+package br.com.microservices.productapi.modules.category.dto;
 
-import br.com.microservices.productapi.modules.product.model.Category;
+import br.com.microservices.productapi.modules.category.model.Category;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
