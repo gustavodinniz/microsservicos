@@ -1,5 +1,6 @@
 package br.com.microservices.productapi.modules.category.controller;
 
+import br.com.microservices.productapi.config.exception.SuccessResponse;
 import br.com.microservices.productapi.modules.category.dto.CategoryRequest;
 import br.com.microservices.productapi.modules.category.dto.CategoryResponse;
 import br.com.microservices.productapi.modules.category.service.CategoryService;
@@ -16,22 +17,33 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public CategoryResponse save(@RequestBody CategoryRequest request){
+    public CategoryResponse save(@RequestBody CategoryRequest request) {
         return categoryService.save(request);
     }
 
     @GetMapping
-    public List<CategoryResponse> findAll (){
+    public List<CategoryResponse> findAll() {
         return categoryService.findAll();
     }
 
     @GetMapping("{id}")
-    public CategoryResponse findById (@PathVariable Integer id){
+    public CategoryResponse findById(@PathVariable Integer id) {
         return categoryService.findByIdResponse(id);
     }
 
     @GetMapping("description/{description}")
-    public List<CategoryResponse> findByDescription (@PathVariable String description){
+    public List<CategoryResponse> findByDescription(@PathVariable String description) {
         return categoryService.findByDescription(description);
+    }
+
+    @DeleteMapping("{id}")
+    public SuccessResponse delete(@PathVariable Integer id) {
+        return categoryService.delete(id);
+    }
+
+    @PutMapping("{id}")
+    public CategoryResponse update(@RequestBody CategoryRequest request,
+                                   @PathVariable Integer id) {
+        return categoryService.update(request, id);
     }
 }

@@ -41,17 +41,19 @@ public class Product {
     private LocalDateTime createdAt;
 
     @PrePersist
-    public void prePersist(){
+    public void prePersist() {
         createdAt = LocalDateTime.now();
     }
 
-    public static Product of(ProductRequest request, Category category, Supplier supplier){
+    public static Product of(ProductRequest request,
+                             Supplier supplier,
+                             Category category) {
         return Product
                 .builder()
                 .name(request.getName())
                 .quantityAvailable(request.getQuantityAvailable())
-                .category(category)
                 .supplier(supplier)
+                .category(category)
                 .build();
     }
 }

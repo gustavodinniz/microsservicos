@@ -1,6 +1,6 @@
 package br.com.microservices.productapi.modules.supplier.controller;
 
-import br.com.microservices.productapi.modules.category.dto.CategoryResponse;
+import br.com.microservices.productapi.config.exception.SuccessResponse;
 import br.com.microservices.productapi.modules.supplier.dto.SupplierRequest;
 import br.com.microservices.productapi.modules.supplier.dto.SupplierResponse;
 import br.com.microservices.productapi.modules.supplier.service.SupplierService;
@@ -17,22 +17,33 @@ public class SupplierController {
     private SupplierService supplierService;
 
     @PostMapping
-    public SupplierResponse save(@RequestBody SupplierRequest request){
+    public SupplierResponse save(@RequestBody SupplierRequest request) {
         return supplierService.save(request);
     }
 
     @GetMapping
-    public List<SupplierResponse> findAll (){
+    public List<SupplierResponse> findAll() {
         return supplierService.findAll();
     }
 
     @GetMapping("{id}")
-    public SupplierResponse findById (@PathVariable Integer id){
+    public SupplierResponse findById(@PathVariable Integer id) {
         return supplierService.findByIdResponse(id);
     }
 
     @GetMapping("name/{name}")
-    public List<SupplierResponse> findByName (@PathVariable String name){
+    public List<SupplierResponse> findByName(@PathVariable String name) {
         return supplierService.findByName(name);
+    }
+
+    @DeleteMapping("{id}")
+    public SuccessResponse delete(@PathVariable Integer id) {
+        return supplierService.delete(id);
+    }
+
+    @PutMapping("{id}")
+    public SupplierResponse update(@RequestBody SupplierRequest request,
+                                   @PathVariable Integer id) {
+        return supplierService.update(request, id);
     }
 }

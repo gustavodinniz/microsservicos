@@ -1,5 +1,6 @@
 package br.com.microservices.productapi.modules.product.service;
 
+import br.com.microservices.productapi.config.exception.SuccessResponse;
 import br.com.microservices.productapi.config.exception.ValidationException;
 import br.com.microservices.productapi.modules.category.service.CategoryService;
 import br.com.microservices.productapi.modules.product.dto.ProductRequest;
@@ -8,6 +9,7 @@ import br.com.microservices.productapi.modules.product.model.Product;
 import br.com.microservices.productapi.modules.product.repository.ProductRepository;
 import br.com.microservices.productapi.modules.supplier.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,17 +17,19 @@ import java.util.stream.Collectors;
 
 import static org.springframework.util.ObjectUtils.isEmpty;
 
+
 @Service
 public class ProductService {
 
     private static final Integer ZERO = 0;
 
+    @Lazy
     @Autowired
     private ProductRepository productRepository;
-
+    @Lazy
     @Autowired
     private SupplierService supplierService;
-
+    @Lazy
     @Autowired
     private CategoryService categoryService;
 
@@ -38,9 +42,7 @@ public class ProductService {
     }
 
     public Product findById(Integer id) {
-        if (isEmpty(id)) {
-            throw new ValidationException("The product ID must be informed.");
-        }
+        validateInformedId(id);
         return productRepository
                 .findById(id)
                 .orElseThrow(() -> new ValidationException("There's no product for the given ID."));
@@ -89,7 +91,20 @@ public class ProductService {
         validateCategoryAndSupplierIdInformed(request);
         var category = categoryService.findById(request.getCategoryId());
         var supplier = supplierService.findById(request.getSupplierId());
-        var product = productRepository.save(Product.of(request, category, supplier));
+        var product = productRepository.save(Product.of(request, supplier, category));
+        return ProductResponse.of(product);
+    }
+
+    public ProductResponse update(ProductRequest request,
+                                  Integer id) {
+        validateProductDataInformed(request);
+        validateInformedId(id);
+        validateCategoryAndSupplierIdInformed(request);
+        var category = categoryService.findById(request.getCategoryId());
+        var supplier = supplierService.findById(request.getSupplierId());
+        var product = Product.of(request, supplier, category);
+        product.setId(id);
+        productRepository.save(product);
         return ProductResponse.of(product);
     }
 
@@ -111,6 +126,29 @@ public class ProductService {
         }
         if (isEmpty(request.getSupplierId())) {
             throw new ValidationException("The supplier ID was not informed.");
+        }
+    }
+
+    public Boolean existsByCategoryId(Integer categoryId) {
+        return productRepository.existsByCategoryId(categoryId);
+    }
+
+    public Boolean existsBySupplierId(Integer supplierId) {
+        return productRepository.existsBySupplierId(supplierId);
+    }
+
+    public SuccessResponse delete(Integer id) {
+        validateInformedId(id);
+        if (!productRepository.existsById(id)) {
+            throw new ValidationException("The product does not exists.");
+        }
+        productRepository.deleteById(id);
+        return SuccessResponse.create("The product was deleted");
+    }
+
+    private void validateInformedId(Integer id) {
+        if (isEmpty(id)) {
+            throw new ValidationException("The product ID must be informed");
         }
     }
 

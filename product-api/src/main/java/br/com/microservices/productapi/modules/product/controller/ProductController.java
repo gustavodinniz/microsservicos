@@ -1,5 +1,8 @@
 package br.com.microservices.productapi.modules.product.controller;
 
+import br.com.microservices.productapi.config.exception.SuccessResponse;
+import br.com.microservices.productapi.modules.category.dto.CategoryRequest;
+import br.com.microservices.productapi.modules.category.dto.CategoryResponse;
 import br.com.microservices.productapi.modules.product.dto.ProductRequest;
 import br.com.microservices.productapi.modules.product.dto.ProductResponse;
 import br.com.microservices.productapi.modules.product.service.ProductService;
@@ -43,5 +46,16 @@ public class ProductController {
     @GetMapping("supplier/{supplierId}")
     public List<ProductResponse> findBySupplierId(@PathVariable Integer supplierId) {
         return productService.findBySupplierId(supplierId);
+    }
+
+    @DeleteMapping("{id}")
+    public SuccessResponse delete(@PathVariable Integer id) {
+        return productService.delete(id);
+    }
+
+    @PutMapping("{id}")
+    public ProductResponse update(@RequestBody ProductRequest request,
+                                   @PathVariable Integer id) {
+        return productService.update(request, id);
     }
 }
