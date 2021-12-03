@@ -1,0 +1,14 @@
+version: "3"
+services: 
+
+  product-db:
+    image: postgres:11
+    container_name: product-db
+    restart: always
+    environment:
+      - POSTGRES_DB=product-db
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+    ports:
+      - 5433:5432
+
