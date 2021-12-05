@@ -1,5 +1,6 @@
 package br.com.microservices.productapi.modules.jwt.dto;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,12 +19,7 @@ public class JwtResponse {
 
     public static JwtResponse getUser(Claims jwtClaims) {
         try {
-            return JwtResponse
-                    .builder()
-                    .id((Integer) jwtClaims.get("id"))
-                    .name((String) jwtClaims.get("name"))
-                    .email((String) jwtClaims.get("email"))
-                    .build();
+            return new ObjectMapper().convertValue(jwtClaims.get("authUser"), JwtResponse.class);
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
