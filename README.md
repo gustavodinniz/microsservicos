@@ -23,7 +23,7 @@
 
 ## Arquitetura Proposta
 
-![Arquitetura Proposta](https://github.com/vhnegrisoli/curso-udemy-comunicacao-microsservicos/blob/master/Conte%C3%BAdos/Arquitetura%20Proposta.png)
+![Arquitetura Proposta](https://github.com/gustavodinniz/microsservicos/blob/master/img/Arquitetura%20Proposta.png)
 
 3 APIs:
 
