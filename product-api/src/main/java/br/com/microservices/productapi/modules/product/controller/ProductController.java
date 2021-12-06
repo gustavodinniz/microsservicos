@@ -1,10 +1,10 @@
 package br.com.microservices.productapi.modules.product.controller;
 
 import br.com.microservices.productapi.config.exception.SuccessResponse;
-import br.com.microservices.productapi.modules.category.dto.CategoryRequest;
-import br.com.microservices.productapi.modules.category.dto.CategoryResponse;
+import br.com.microservices.productapi.modules.product.dto.ProductCheckStockRequest;
 import br.com.microservices.productapi.modules.product.dto.ProductRequest;
 import br.com.microservices.productapi.modules.product.dto.ProductResponse;
+import br.com.microservices.productapi.modules.product.dto.ProductSalesResponse;
 import br.com.microservices.productapi.modules.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +55,18 @@ public class ProductController {
 
     @PutMapping("{id}")
     public ProductResponse update(@RequestBody ProductRequest request,
-                                   @PathVariable Integer id) {
+                                  @PathVariable Integer id) {
         return productService.update(request, id);
     }
+
+    @PostMapping("check-stock")
+    public SuccessResponse checkProductStock(@RequestBody ProductCheckStockRequest request) {
+        return productService.checkProductsStock(request);
+    }
+
+    @GetMapping("{id}/sales")
+    public ProductSalesResponse findProductsSales(@PathVariable Integer id) {
+        return productService.findProductSales(id);
+    }
+
 }
